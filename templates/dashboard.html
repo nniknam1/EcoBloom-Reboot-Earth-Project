@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌱 EcoBloom - Pest Detection Dashboard</title>
+    <title>EcoBloom - Sustainable Pest Monitoring</title>
     <style>
         * {
             margin: 0;
@@ -12,9 +12,9 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #333;
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1e5631 0%, #2d7a4a 50%, #56ab6f 100%);
+            color: #2c3e2c;
             min-height: 100vh;
             padding: 20px;
         }
@@ -25,23 +25,82 @@
         }
 
         header {
-            background: white;
-            padding: 30px;
+            background: linear-gradient(135deg, #f4f9f4 0%, #e8f5e8 100%);
+            padding: 40px;
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             margin-bottom: 30px;
             text-align: center;
+            border-left: 8px solid #2d7a4a;
+        }
+
+        .un-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .un-colors {
+            display: flex;
+            gap: 3px;
+        }
+
+        .un-bar {
+            width: 4px;
+            height: 40px;
+            background: #009edb;
         }
 
         h1 {
-            color: #667eea;
-            font-size: 2.5em;
+            color: #1e5631;
+            font-size: 2.8em;
             margin-bottom: 10px;
+            font-weight: 700;
         }
 
         .subtitle {
-            color: #666;
-            font-size: 1.2em;
+            color: #2d7a4a;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .sdg-badge {
+            display: inline-block;
+            background: #4c9f38;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+
+        .language-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #2d7a4a 0%, #4c9f38 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 600;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+
+        .language-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(45, 122, 74, 0.4);
+        }
+
+        .rtl {
+            direction: rtl;
+            text-align: right;
         }
 
         .grid {
@@ -52,16 +111,24 @@
         }
 
         .card {
-            background: white;
+            background: linear-gradient(135deg, #ffffff 0%, #f9fdf9 100%);
             padding: 25px;
             border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            border-left: 5px solid #56ab6f;
         }
 
         .card h2 {
-            color: #667eea;
+            color: #1e5631;
             margin-bottom: 15px;
             font-size: 1.5em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .icon {
+            font-size: 1.3em;
         }
 
         .stat {
@@ -112,22 +179,24 @@
         }
 
         .camera-item {
-            background: #f8f9fa;
+            background: linear-gradient(135deg, #e8f5e8 0%, #d4ead4 100%);
             padding: 15px;
             margin-bottom: 10px;
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s;
+            border-left: 4px solid #4c9f38;
         }
 
         .camera-item:hover {
-            background: #e9ecef;
+            background: linear-gradient(135deg, #d4ead4 0%, #c0e0c0 100%);
             transform: translateX(5px);
+            box-shadow: 0 3px 10px rgba(76, 159, 56, 0.3);
         }
 
         .camera-name {
             font-weight: bold;
-            color: #667eea;
+            color: #1e5631;
             margin-bottom: 5px;
         }
 
@@ -137,7 +206,7 @@
         }
 
         button {
-            background: #667eea;
+            background: linear-gradient(135deg, #2d7a4a 0%, #4c9f38 100%);
             color: white;
             border: none;
             padding: 12px 25px;
@@ -146,12 +215,13 @@
             font-size: 1em;
             transition: all 0.3s;
             margin: 5px;
+            font-weight: 600;
         }
 
         button:hover {
-            background: #5568d3;
+            background: linear-gradient(135deg, #1e5631 0%, #2d7a4a 100%);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 5px 15px rgba(45, 122, 74, 0.4);
         }
 
         .detection-list {
@@ -160,11 +230,11 @@
         }
 
         .detection-item {
-            background: #f8f9fa;
+            background: linear-gradient(135deg, #f9fdf9 0%, #f0f8f0 100%);
             padding: 15px;
             margin-bottom: 10px;
             border-radius: 8px;
-            border-left: 4px solid #667eea;
+            border-left: 4px solid #4c9f38;
         }
 
         .detection-time {
@@ -185,23 +255,23 @@
             font-size: 1.2em;
         }
 
-        .upload-area {
-            border: 2px dashed #667eea;
+        .auto-capture-info {
+            background: linear-gradient(135deg, #e8f5e8 0%, #d4ead4 100%);
+            border: 2px solid #4c9f38;
             border-radius: 8px;
-            padding: 30px;
+            padding: 20px;
             text-align: center;
             margin: 20px 0;
-            cursor: pointer;
-            transition: all 0.3s;
         }
 
-        .upload-area:hover {
-            background: #f8f9fa;
-            border-color: #5568d3;
+        .auto-capture-info h3 {
+            color: #1e5631;
+            margin-bottom: 10px;
         }
 
-        #fileInput {
-            display: none;
+        .auto-capture-info p {
+            color: #2d7a4a;
+            line-height: 1.6;
         }
 
         .alert-item {
@@ -214,57 +284,103 @@
     </style>
 </head>
 <body>
+    <button class="language-toggle" onclick="toggleLanguage()">
+        <span id="langButton">العربية</span>
+    </button>
+
     <div class="container">
         <header>
-            <h1>🌱 EcoBloom Pest Detection</h1>
-            <p class="subtitle">Multi-Location Farm Monitoring System</p>
+            <div class="un-logo">
+                <div class="un-colors">
+                    <div class="un-bar"></div>
+                    <div class="un-bar"></div>
+                    <div class="un-bar"></div>
+                </div>
+                <h1 data-en="EcoBloom" data-ar="إيكو بلوم">EcoBloom</h1>
+            </div>
+            <p class="subtitle" data-en="Sustainable Pest Monitoring for Climate-Smart Agriculture" data-ar="مراقبة مستدامة للآفات من أجل زراعة ذكية مناخياً">Sustainable Pest Monitoring for Climate-Smart Agriculture</p>
+            <div class="sdg-badge" data-en="UN SDG 2: Zero Hunger | SDG 13: Climate Action" data-ar="أهداف الأمم المتحدة للتنمية المستدامة 2: القضاء على الجوع | 13: العمل المناخي">UN SDG 2: Zero Hunger | SDG 13: Climate Action</div>
         </header>
 
         <!-- Summary Statistics -->
         <div class="grid">
             <div class="card">
-                <h2>📊 Overall Statistics (7 Days)</h2>
-                <div id="overallStats" class="loading">Loading...</div>
+                <h2><span class="icon">📊</span> <span data-en="Overall Statistics (7 Days)" data-ar="إحصائيات عامة (7 أيام)">Overall Statistics (7 Days)</span></h2>
+                <div id="overallStats" class="loading" data-en="Loading..." data-ar="جار التحميل...">Loading...</div>
             </div>
 
             <div class="card">
-                <h2>📹 Active Cameras</h2>
-                <div id="cameraList" class="loading">Loading...</div>
+                <h2><span class="icon">🌍</span> <span data-en="Active Farm Locations" data-ar="مواقع المزارع النشطة">Active Farm Locations</span></h2>
+                <div id="cameraList" class="loading" data-en="Loading..." data-ar="جار التحميل...">Loading...</div>
             </div>
 
             <div class="card">
-                <h2>🚨 Recent Alerts</h2>
-                <div id="alertsList" class="loading">Loading...</div>
+                <h2><span class="icon">⚠️</span> <span data-en="Recent Alerts" data-ar="تنبيهات حديثة">Recent Alerts</span></h2>
+                <div id="alertsList" class="loading" data-en="Loading..." data-ar="جار التحميل...">Loading...</div>
             </div>
         </div>
 
-        <!-- Manual Upload -->
+        <!-- Automated System Info -->
         <div class="card">
-            <h2>📤 Manual Image Upload</h2>
-            <div class="upload-area" onclick="document.getElementById('fileInput').click()">
-                <p>📸 Click to upload a sticky trap image for instant analysis</p>
-                <input type="file" id="fileInput" accept="image/*" onchange="uploadImage(this)">
+            <h2><span class="icon">🤖</span> <span data-en="Automated Monitoring System" data-ar="نظام المراقبة الآلي">Automated Monitoring System</span></h2>
+            <div class="auto-capture-info">
+                <h3 data-en="IoT Camera Traps - Continuous Field Monitoring" data-ar="فخاخ كاميرا إنترنت الأشياء - مراقبة مستمرة للحقول">IoT Camera Traps - Continuous Field Monitoring</h3>
+                <p data-en="Raspberry Pi cameras automatically capture sticky trap images every hour. Images are analyzed using computer vision and results are logged to the database. Farmers receive instant alerts when pest levels reach concerning thresholds." data-ar="تلتقط كاميرات راسبيري باي تلقائياً صور الفخاخ اللاصقة كل ساعة. يتم تحليل الصور باستخدام رؤية الكمبيوتر وتسجيل النتائج في قاعدة البيانات. يتلقى المزارعون تنبيهات فورية عندما تصل مستويات الآفات إلى عتبات مقلقة.">
+                    Raspberry Pi cameras automatically capture sticky trap images every hour. Images are analyzed using computer vision and results are logged to the database. Farmers receive instant alerts when pest levels reach concerning thresholds.
+                </p>
+                <p style="margin-top: 15px; font-size: 0.95em;" data-en="Sustainable Technology: Solar-powered devices | Low environmental impact | Community-driven data" data-ar="تكنولوجيا مستدامة: أجهزة تعمل بالطاقة الشمسية | تأثير بيئي منخفض | بيانات مدفوعة من المجتمع">
+                    <strong>Sustainable Technology:</strong> Solar-powered devices | Low environmental impact | Community-driven data
+                </p>
             </div>
-            <button onclick="triggerManualCapture()">📸 Trigger Camera Capture</button>
-            <div id="uploadResult"></div>
+            <button onclick="triggerManualCapture()"><span data-en="🔄 Trigger Manual Camera Capture" data-ar="🔄 تفعيل التقاط الكاميرا يدوياً">🔄 Trigger Manual Camera Capture</span></button>
         </div>
 
         <!-- Recent Detections -->
         <div class="card">
-            <h2>🔍 Recent Detections (Last 24 Hours)</h2>
-            <div id="recentDetections" class="detection-list loading">Loading...</div>
+            <h2><span class="icon">🔍</span> <span data-en="Recent Detections (Last 24 Hours)" data-ar="الكشوفات الأخيرة (آخر 24 ساعة)">Recent Detections (Last 24 Hours)</span></h2>
+            <div id="recentDetections" class="detection-list loading" data-en="Loading..." data-ar="جار التحميل...">Loading...</div>
         </div>
 
-        <!-- Trend Chart Placeholder -->
+        <!-- Trend Chart -->
         <div class="card">
-            <h2>📈 Pest Activity Trend</h2>
+            <h2><span class="icon">📈</span> <span data-en="Pest Activity Trend" data-ar="اتجاه نشاط الآفات">Pest Activity Trend</span></h2>
             <div id="trendChart">
                 <canvas id="chartCanvas" width="800" height="300"></canvas>
             </div>
         </div>
+
+        <!-- Footer -->
+        <footer style="text-align: center; margin-top: 30px; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 10px; color: #e8f5e8;">
+            <p style="font-size: 0.9em;" data-en="🌱 Built for Reboot Earth Hackathon 2025 | Sustainable Agriculture Technology" data-ar="🌱 مبني لهاكاثون ريبوت إيرث 2025 | تكنولوجيا الزراعة المستدامة">🌱 Built for Reboot Earth Hackathon 2025 | Sustainable Agriculture Technology</p>
+            <p style="font-size: 0.85em; margin-top: 10px;" data-en="Supporting UN Sustainable Development Goals: Zero Hunger, Climate Action, Sustainable Communities" data-ar="دعم أهداف الأمم المتحدة للتنمية المستدامة: القضاء على الجوع، العمل المناخي، المجتمعات المستدامة">Supporting UN Sustainable Development Goals: Zero Hunger, Climate Action, Sustainable Communities</p>
+        </footer>
     </div>
 
     <script>
+        // Language toggle
+        let currentLang = 'en';
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'ar' : 'en';
+
+            // Update all translatable elements
+            document.querySelectorAll('[data-en][data-ar]').forEach(elem => {
+                elem.textContent = elem.getAttribute('data-' + currentLang);
+            });
+
+            // Toggle RTL
+            if (currentLang === 'ar') {
+                document.body.classList.add('rtl');
+                document.getElementById('langButton').textContent = 'English';
+            } else {
+                document.body.classList.remove('rtl');
+                document.getElementById('langButton').textContent = 'العربية';
+            }
+
+            // Reload dashboard data with new language
+            loadDashboard();
+        }
+
         // API calls
         async function fetchData(endpoint) {
             try {
@@ -379,7 +495,7 @@
             ctx.stroke();
 
             // Draw line
-            ctx.strokeStyle = '#667eea';
+            ctx.strokeStyle = '#2d7a4a';
             ctx.lineWidth = 3;
             ctx.beginPath();
 
@@ -394,7 +510,7 @@
                 }
 
                 // Draw data points
-                ctx.fillStyle = '#667eea';
+                ctx.fillStyle = '#4c9f38';
                 ctx.fillRect(x - 3, y - 3, 6, 6);
             });
 
@@ -417,44 +533,6 @@
             alert(`Camera: ${cameraId}\n\nDetailed view coming soon!`);
         }
 
-        async function uploadImage(input) {
-            const file = input.files[0];
-            if (!file) return;
-
-            const formData = new FormData();
-            formData.append('image', file);
-            formData.append('camera_id', 'MANUAL_UPLOAD');
-
-            document.getElementById('uploadResult').innerHTML = '<p>🔄 Analyzing image...</p>';
-
-            try {
-                const response = await fetch('/api/upload-image', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                const result = await response.json();
-
-                if (result.success) {
-                    const det = result.result;
-                    document.getElementById('uploadResult').innerHTML = `
-                        <div class="detection-item" style="margin-top: 15px;">
-                            <strong>✅ Analysis Complete!</strong><br>
-                            Pests Detected: <strong>${det.pest_count}</strong><br>
-                            Risk Level: <span class="risk-badge risk-${det.risk_level.toLowerCase()}">${det.risk_level}</span><br>
-                            <small>Image saved and logged to database</small>
-                        </div>
-                    `;
-
-                    // Refresh dashboard
-                    setTimeout(loadDashboard, 1000);
-                } else {
-                    document.getElementById('uploadResult').innerHTML = `<p style="color: red;">❌ Error: ${result.error}</p>`;
-                }
-            } catch (error) {
-                document.getElementById('uploadResult').innerHTML = `<p style="color: red;">❌ Upload failed</p>`;
-            }
-        }
 
         async function triggerManualCapture() {
             if (!confirm('Trigger a manual camera capture and analysis?')) return;
