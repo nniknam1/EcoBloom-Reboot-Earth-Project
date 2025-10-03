@@ -1,0 +1,30 @@
+
+==================================================
+Starting Farm B
+Host: localhost:5002
+==================================================
+
+Listening socket created for member Farm_B
+[Farm B] Connecting to localhost:5001...
+Connecting to localhost:5001...
+[Farm B] [OK] Connected to localhost:5001
+
+[Farm B] Peer running. Monitoring network...
+[Farm B] Press Ctrl+C to stop
+
+Handshake from Farm_A
+[Farm_B]> Network updated
+[Farm_B]> Handshake from Farm_C
+[Farm_B]> Network updated
+[Farm_B]> Handshake from Farm_C
+[Farm_B]> Network updated
+[Farm_B]> Network updated
+[Farm_B]> [Farm B] Status: 2 connections, 2 known peers
+[Farm B] Status: 2 connections, 2 known peers
+
+[Farm B] Shutting down...
+Closing down peer...
+
+Cleaned up connection ('127.0.0.1', 57027)
+ERROR: [WinError 10038] An operation was attempted on something that is not a socket
+Peer closing complete
