@@ -1,0 +1,82 @@
+# YOLOv8 Training Configuration for Qatar Pest Detection
+# Model: YOLOv8n (nano) - Optimized for Raspberry Pi 4
+
+# Paths
+path: ./qatar-pests-dataset  # Dataset root directory
+train: images/train  # Train images (relative to 'path')
+val: images/val  # Validation images (relative to 'path')
+test: images/test  # Test images (relative to 'path')
+
+# Classes
+names:
+  0: whitefly
+  1: fungus_gnat
+  2: thrips
+  3: aphid
+  4: leaf_miner
+
+# Training Hyperparameters
+model: yolov8n.pt  # Pre-trained weights (nano version for Pi)
+epochs: 100  # Training epochs
+batch: 16  # Batch size (adjust based on GPU memory)
+imgsz: 640  # Image size (640x640 pixels)
+device: 0  # GPU device (0 for first GPU, 'cpu' for CPU)
+
+# Optimization
+optimizer: Adam  # Optimizer (Adam, SGD, etc.)
+lr0: 0.01  # Initial learning rate
+lrf: 0.01  # Final learning rate (lr0 * lrf)
+momentum: 0.937  # SGD momentum/Adam beta1
+weight_decay: 0.0005  # Optimizer weight decay
+
+# Augmentation (Important for small datasets)
+hsv_h: 0.015  # Hue augmentation
+hsv_s: 0.7  # Saturation augmentation
+hsv_v: 0.4  # Value (brightness) augmentation
+degrees: 10.0  # Rotation augmentation (degrees)
+translate: 0.1  # Translation augmentation
+scale: 0.5  # Scaling augmentation
+shear: 0.0  # Shear augmentation
+perspective: 0.0  # Perspective augmentation
+flipud: 0.5  # Vertical flip probability
+fliplr: 0.5  # Horizontal flip probability
+mosaic: 1.0  # Mosaic augmentation probability
+mixup: 0.0  # MixUp augmentation probability
+
+# Performance
+workers: 8  # Number of worker threads for data loading
+project: runs/train  # Project directory
+name: qatar-pests-v1  # Experiment name
+exist_ok: True  # Overwrite existing project/name
+pretrained: True  # Use pre-trained weights
+verbose: True  # Verbose output
+
+# Validation
+val: True  # Validate during training
+save: True  # Save checkpoints
+save_period: 10  # Save checkpoint every N epochs
+cache: False  # Cache images (True/False/'ram'/'disk')
+
+# Advanced
+patience: 50  # Early stopping patience (epochs without improvement)
+rect: False  # Rectangular training
+cos_lr: False  # Cosine learning rate scheduler
+close_mosaic: 10  # Disable mosaic augmentation for final epochs
+amp: True  # Automatic Mixed Precision training
+fraction: 1.0  # Dataset fraction to train on
+
+# Inference Settings (for deployment)
+conf: 0.25  # Confidence threshold for detection
+iou: 0.7  # IoU threshold for NMS (Non-Maximum Suppression)
+max_det: 300  # Maximum detections per image
+
+# Deployment Optimization
+half: True  # Use FP16 half-precision inference (faster on Pi 4)
+dnn: False  # Use OpenCV DNN for ONNX inference
+plots: True  # Save training plots
+
+# Notes:
+# - Batch size of 16 works on most GPUs (reduce to 8 if OOM)
+# - Training takes ~4-6 hours on Google Colab free tier
+# - Model size: ~6MB (perfect for Raspberry Pi)
+# - Expected mAP@0.5: 90-94% with 200+ images per class

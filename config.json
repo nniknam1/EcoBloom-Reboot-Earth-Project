@@ -1,0 +1,57 @@
+{
+    "camera": {
+        "camera_id": "CAM001",
+        "location": {
+            "name": "North Field - Zone A",
+            "latitude": 0.0,
+            "longitude": 0.0,
+            "description": "Main tomato field"
+        },
+        "capture_interval_minutes": 60,
+        "resolution": [1920, 1080],
+        "auto_start": true
+    },
+    "detection": {
+        "min_pest_area": 20,
+        "max_pest_area": 5000,
+        "risk_thresholds": {
+            "low": 2,
+            "medium": 5,
+            "high": 10
+        },
+        "adaptive_threshold": true
+    },
+    "storage": {
+        "local_db_path": "data/pest_data.db",
+        "image_storage_path": "data/images",
+        "keep_images_days": 30
+    },
+    "alerts": {
+        "email": {
+            "enabled": false,
+            "smtp_server": "smtp.gmail.com",
+            "smtp_port": 587,
+            "sender_email": "your_email@gmail.com",
+            "sender_password": "your_app_password",
+            "recipient_email": "farmer@example.com"
+        },
+        "sms": {
+            "enabled": false,
+            "twilio_account_sid": "YOUR_TWILIO_SID",
+            "twilio_auth_token": "YOUR_TWILIO_TOKEN",
+            "twilio_phone": "+1234567890",
+            "recipient_phone": "+1234567890"
+        },
+        "mqtt": {
+            "enabled": false,
+            "broker": "mqtt.example.com",
+            "port": 1883,
+            "topic": "farm/pests"
+        }
+    },
+    "dashboard": {
+        "enabled": true,
+        "host": "0.0.0.0",
+        "port": 5000
+    }
+}

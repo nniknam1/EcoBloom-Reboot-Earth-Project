@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌱 EcoBloom - Pest Detection Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.2em;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .card h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .stat {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .stat:last-child {
+            border-bottom: none;
+        }
+
+        .stat-label {
+            color: #666;
+        }
+
+        .stat-value {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .risk-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .risk-low {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .risk-medium {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .risk-high {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .camera-list {
+            list-style: none;
+        }
+
+        .camera-item {
+            background: #f8f9fa;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .camera-item:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .camera-name {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .camera-info {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s;
+            margin: 5px;
+        }
+
+        button:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .detection-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .detection-item {
+            background: #f8f9fa;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .detection-time {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .chart-container {
+            height: 300px;
+            margin-top: 20px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-size: 1.2em;
+        }
+
+        .upload-area {
+            border: 2px dashed #667eea;
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .upload-area:hover {
+            background: #f8f9fa;
+            border-color: #5568d3;
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        .alert-item {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌱 EcoBloom Pest Detection</h1>
+            <p class="subtitle">Multi-Location Farm Monitoring System</p>
+        </header>
+
+        <!-- Summary Statistics -->
+        <div class="grid">
+            <div class="card">
+                <h2>📊 Overall Statistics (7 Days)</h2>
+                <div id="overallStats" class="loading">Loading...</div>
+            </div>
+
+            <div class="card">
+                <h2>📹 Active Cameras</h2>
+                <div id="cameraList" class="loading">Loading...</div>
+            </div>
+
+            <div class="card">
+                <h2>🚨 Recent Alerts</h2>
+                <div id="alertsList" class="loading">Loading...</div>
+            </div>
+        </div>
+
+        <!-- Manual Upload -->
+        <div class="card">
+            <h2>📤 Manual Image Upload</h2>
+            <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+                <p>📸 Click to upload a sticky trap image for instant analysis</p>
+                <input type="file" id="fileInput" accept="image/*" onchange="uploadImage(this)">
+            </div>
+            <button onclick="triggerManualCapture()">📸 Trigger Camera Capture</button>
+            <div id="uploadResult"></div>
+        </div>
+
+        <!-- Recent Detections -->
+        <div class="card">
+            <h2>🔍 Recent Detections (Last 24 Hours)</h2>
+            <div id="recentDetections" class="detection-list loading">Loading...</div>
+        </div>
+
+        <!-- Trend Chart Placeholder -->
+        <div class="card">
+            <h2>📈 Pest Activity Trend</h2>
+            <div id="trendChart">
+                <canvas id="chartCanvas" width="800" height="300"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // API calls
+        async function fetchData(endpoint) {
+            try {
+                const response = await fetch(`/api/${endpoint}`);
+                return await response.json();
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                return null;
+            }
+        }
+
+        async function loadDashboard() {
+            // Load overall statistics
+            const stats = await fetchData('statistics?days=7');
+            if (stats) {
+                document.getElementById('overallStats').innerHTML = `
+                    <div class="stat">
+                        <span class="stat-label">Total Captures:</span>
+                        <span class="stat-value">${stats.total_captures || 0}</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Total Pests Detected:</span>
+                        <span class="stat-value">${stats.total_pests || 0}</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Average per Capture:</span>
+                        <span class="stat-value">${(stats.avg_pests || 0).toFixed(1)}</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Maximum in Single Capture:</span>
+                        <span class="stat-value">${stats.max_pests || 0}</span>
+                    </div>
+                `;
+            }
+
+            // Load cameras
+            const cameras = await fetchData('cameras');
+            if (cameras && cameras.length > 0) {
+                document.getElementById('cameraList').innerHTML = `
+                    <ul class="camera-list">
+                        ${cameras.map(cam => `
+                            <li class="camera-item" onclick="showCameraDetails('${cam.camera_id}')">
+                                <div class="camera-name">${cam.camera_id}</div>
+                                <div class="camera-info">${cam.location_name}</div>
+                                <div class="camera-info">Last capture: ${new Date(cam.last_capture).toLocaleString()}</div>
+                                <div class="camera-info">Total: ${cam.total_captures} captures</div>
+                            </li>
+                        `).join('')}
+                    </ul>
+                `;
+            } else {
+                document.getElementById('cameraList').innerHTML = '<p>No cameras registered yet</p>';
+            }
+
+            // Load alerts
+            const alerts = await fetchData('alerts/pending');
+            if (alerts && alerts.length > 0) {
+                document.getElementById('alertsList').innerHTML = alerts.slice(0, 5).map(alert => `
+                    <div class="alert-item">
+                        <strong>${alert.alert_type}</strong><br>
+                        ${alert.message}<br>
+                        <small>${new Date(alert.timestamp).toLocaleString()}</small>
+                    </div>
+                `).join('');
+            } else {
+                document.getElementById('alertsList').innerHTML = '<p>No pending alerts 🎉</p>';
+            }
+
+            // Load recent detections
+            const detections = await fetchData('detections/recent?hours=24&limit=20');
+            if (detections && detections.length > 0) {
+                document.getElementById('recentDetections').innerHTML = detections.map(det => `
+                    <div class="detection-item">
+                        <div class="detection-time">${new Date(det.timestamp).toLocaleString()}</div>
+                        <strong>${det.camera_id}</strong> - ${det.location_name}<br>
+                        Pests: <strong>${det.pest_count}</strong> |
+                        Risk: <span class="risk-badge risk-${det.risk_level.toLowerCase()}">${det.risk_level}</span>
+                    </div>
+                `).join('');
+            } else {
+                document.getElementById('recentDetections').innerHTML = '<p>No detections in the last 24 hours</p>';
+            }
+
+            // Load trend data and draw simple chart
+            const trends = await fetchData('trends?days=7');
+            if (trends && trends.length > 0) {
+                drawTrendChart(trends);
+            }
+        }
+
+        function drawTrendChart(trends) {
+            const canvas = document.getElementById('chartCanvas');
+            const ctx = canvas.getContext('2d');
+
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Get max value for scaling
+            const maxPests = Math.max(...trends.map(t => t.total_pests || 0));
+            const padding = 50;
+            const graphHeight = canvas.height - 2 * padding;
+            const graphWidth = canvas.width - 2 * padding;
+            const stepX = graphWidth / (trends.length - 1 || 1);
+
+            // Draw axes
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, canvas.height - padding);
+            ctx.lineTo(canvas.width - padding, canvas.height - padding);
+            ctx.stroke();
+
+            // Draw line
+            ctx.strokeStyle = '#667eea';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+
+            trends.forEach((trend, i) => {
+                const x = padding + i * stepX;
+                const y = canvas.height - padding - (trend.total_pests / (maxPests || 1)) * graphHeight;
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+
+                // Draw data points
+                ctx.fillStyle = '#667eea';
+                ctx.fillRect(x - 3, y - 3, 6, 6);
+            });
+
+            ctx.stroke();
+
+            // Draw labels
+            ctx.fillStyle = '#666';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'center';
+
+            trends.forEach((trend, i) => {
+                const x = padding + i * stepX;
+                const date = new Date(trend.date);
+                const label = `${date.getMonth() + 1}/${date.getDate()}`;
+                ctx.fillText(label, x, canvas.height - padding + 20);
+            });
+        }
+
+        function showCameraDetails(cameraId) {
+            alert(`Camera: ${cameraId}\n\nDetailed view coming soon!`);
+        }
+
+        async function uploadImage(input) {
+            const file = input.files[0];
+            if (!file) return;
+
+            const formData = new FormData();
+            formData.append('image', file);
+            formData.append('camera_id', 'MANUAL_UPLOAD');
+
+            document.getElementById('uploadResult').innerHTML = '<p>🔄 Analyzing image...</p>';
+
+            try {
+                const response = await fetch('/api/upload-image', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    const det = result.result;
+                    document.getElementById('uploadResult').innerHTML = `
+                        <div class="detection-item" style="margin-top: 15px;">
+                            <strong>✅ Analysis Complete!</strong><br>
+                            Pests Detected: <strong>${det.pest_count}</strong><br>
+                            Risk Level: <span class="risk-badge risk-${det.risk_level.toLowerCase()}">${det.risk_level}</span><br>
+                            <small>Image saved and logged to database</small>
+                        </div>
+                    `;
+
+                    // Refresh dashboard
+                    setTimeout(loadDashboard, 1000);
+                } else {
+                    document.getElementById('uploadResult').innerHTML = `<p style="color: red;">❌ Error: ${result.error}</p>`;
+                }
+            } catch (error) {
+                document.getElementById('uploadResult').innerHTML = `<p style="color: red;">❌ Upload failed</p>`;
+            }
+        }
+
+        async function triggerManualCapture() {
+            if (!confirm('Trigger a manual camera capture and analysis?')) return;
+
+            try {
+                const response = await fetch('/api/manual-capture', {
+                    method: 'POST'
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    alert('✅ Manual capture successful!\n\nPests: ' + result.result.pest_count + '\nRisk: ' + result.result.risk_level);
+                    loadDashboard();
+                } else {
+                    alert('❌ Capture failed: ' + result.error);
+                }
+            } catch (error) {
+                alert('❌ Error triggering capture');
+            }
+        }
+
+        // Load dashboard on page load
+        loadDashboard();
+
+        // Refresh every 30 seconds
+        setInterval(loadDashboard, 30000);
+    </script>
+</body>
+</html>
