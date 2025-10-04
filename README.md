@@ -1,73 +1,69 @@
+# 🌱 EcoBloom - Smart Agriculture Platform
 
-# 🌱 EcoBloom - Smart Pest Detection for Farmers
-
-**Multi-Location IoT Pest Monitoring System**
+**Comprehensive IoT System for Sustainable Farming in Qatar**
 *Built for Reboot Earth Hackathon 2025*
 
 ---
 
-## 🎯 Problem
-Farmers waste time manually checking sticky traps across large fields, leading to delayed pest control and crop damage.
+## 🎯 Overview
 
-## 💡 Solution
-Automated camera trap system using Raspberry Pi that:
-- 📸 Captures images of sticky traps automatically
-- 🤖 Detects and counts pests using computer vision
-- 📊 Tracks pest trends across multiple farm locations
-- 🚨 Sends instant alerts when pest levels spike
-- 🗺️ Provides web dashboard for farm-wide monitoring
+EcoBloom is an integrated agricultural monitoring platform that combines multiple smart farming technologies to help farmers in Qatar optimize crop production, detect pests early, prevent heat stress, and share critical information across farms.
+
+### The Challenge
+Farmers face multiple threats to crop health:
+- **Pest infestations** detected too late, causing crop damage
+- **Heat stress** from extreme temperatures affecting plant health
+- **Information isolation** - no way to share pest alerts between farms
+- **Manual monitoring** - time-consuming and ineffective
+
+### Our Solution
+An affordable, open-source platform with **4 integrated systems**:
+
+1. **🐛 Pest Detection System** - Automated sticky trap monitoring
+2. **🌡️ Heat Stress Detection** - Plant health monitoring via computer vision
+3. **🔗 P2P Alert Network** - Farm-to-farm communication system
+4. **📊 Unified Dashboard** - Centralized monitoring interface
 
 ---
 
-## ⚡ Quick Start
+## 🚀 Quick Start
 
-### 1. Install Dependencies
+### Installation
 ```bash
+# Clone the repository
+git clone https://github.com/nniknam1/EcoBloom-Reboot-Earth-Project.git
+cd EcoBloom-Reboot-Earth-Project
+
+# Install dependencies
 pip install -r requirements.txt
 ```
 
-### 2. Configure Your Camera
-Edit `config.json` with your camera location and settings.
+### Run Individual Systems
 
-### 3. Run the Dashboard
+**Pest Detection System:**
 ```bash
-python main.py --dashboard
+cd "Sticky Trap System"
+python run_demo.py sticky-trap-sample.jpg
+# Or run dashboard:
+python dashboard_simple.py
 ```
-Access at: **http://localhost:5000**
 
-### 4. Start Automated Monitoring
+**Heat Stress Detection:**
 ```bash
-python main.py --scheduler
+cd Heat-Risk
+python heat_stress_app.py
 ```
 
----
-
-## 🎥 Demo Features
-
-### For Hackathon Judges:
-1. **Web Dashboard** - Visual interface showing all locations
-2. **Manual Upload** - Upload sticky trap photos instantly
-3. **Multi-Location Support** - Track pests across entire farm
-4. **Real-time Alerts** - Email/SMS when pests spike
-5. **Trend Analysis** - Historical pest data visualization
-6. **Batch Processing** - Analyze multiple traps at once
-
----
-
-## 🏗️ System Architecture
-
+**P2P Alert Network:**
+```bash
+cd P2P-System
+python demo_launcher.py
 ```
-Raspberry Pi Camera Traps (Field Deployment)
-    ↓
-Automated Image Capture (Hourly/Daily)
-    ↓
-Computer Vision Detection (OpenCV)
-    ↓
-SQLite Database (Local Storage)
-    ↓
-Alert System (Email/SMS/MQTT)
-    ↓
-Web Dashboard (Flask) - Multi-Farm View
+
+**Unified Dashboard:**
+```bash
+cd Dashboard
+python app.py
 ```
 
 ---
@@ -76,163 +72,387 @@ Web Dashboard (Flask) - Multi-Farm View
 
 ```
 EcoBloom-Reboot-Earth-Project/
-├── main.py                 # Main CLI interface
-├── dashboard.py            # Web dashboard server
-├── config.json             # Configuration file
-├── modules/
-│   ├── camera_capture.py   # Pi Camera integration
-│   ├── pest_detector.py    # Computer vision detection
-│   ├── data_logger.py      # Database management
-│   ├── alert_system.py     # Email/SMS/MQTT alerts
-│   └── scheduler.py        # Automated scheduling
-├── templates/
-│   └── dashboard.html      # Web interface
-├── data/                   # Database & images
-└── Sticky Trap.py          # Original detection code
+│
+├── Sticky Trap System/          # 🐛 Automated Pest Detection
+│   ├── modules/                 # Core detection modules
+│   │   ├── camera_capture.py    # Raspberry Pi camera integration
+│   │   ├── pest_detector.py     # OpenCV pest detection
+│   │   ├── data_logger.py       # SQLite database management
+│   │   ├── alert_system.py      # Email/SMS/MQTT alerts
+│   │   └── scheduler.py         # Automated monitoring
+│   ├── model-training/          # YOLOv8 training pipeline
+│   │   ├── train_yolov8.py      # Auto-training script
+│   │   ├── TRAINING-GUIDE.md    # Step-by-step training
+│   │   └── README.md            # ML methodology
+│   ├── dashboard.py             # Full web dashboard
+│   ├── dashboard_simple.py      # Simplified dashboard
+│   ├── run_demo.py              # Quick demo script
+│   ├── config.json              # System configuration
+│   ├── data/                    # Database and images
+│   └── templates/               # Web UI templates
+│
+├── Heat-Risk/                   # 🌡️ Plant Heat Stress Detection
+│   ├── heat_risk.py             # ML model for heat stress
+│   ├── heat_stress_app.py       # Flask web interface
+│   ├── heat_stress_model.pkl    # Trained model
+│   └── dataset_crops/           # Training data
+│
+├── P2P-System/                  # 🔗 Farm-to-Farm Communication
+│   ├── peer.py                  # P2P node implementation
+│   ├── message.py               # Message protocol
+│   ├── router.py                # Network routing
+│   ├── pest_alert_handler.py    # Pest alert integration
+│   ├── demo_launcher.py         # Multi-farm demo
+│   ├── dashboard.html           # P2P network dashboard
+│   └── database/                # Message storage
+│
+├── Dashboard/                   # 📊 Unified Monitoring Dashboard
+│   ├── app.py                   # Main dashboard server
+│   ├── dashboard.html           # Combined interface
+│   └── service_logs/            # System logs
+│
+├── Pest-detection/              # Alternative pest detection UI
+│   ├── pest_detection.py        # Detection engine
+│   └── pest_detection.html      # Web interface
+│
+├── README.md                    # This file
+├── SETUP.md                     # Detailed setup guide
+├── requirements.txt             # Python dependencies
+└── DEMO-GUIDE.md               # Hackathon demo instructions
 ```
 
 ---
 
-## 🚀 Features
+## 🐛 System 1: Sticky Trap Pest Detection
 
-### ✅ Multi-Location Management
-- GPS/location tagging for each camera
-- Farm zone mapping (North Field, Greenhouse A, etc.)
-- Batch processing across multiple traps
-- Historical tracking per location
+### Features
+- **Automated Image Capture**: Raspberry Pi cameras photograph sticky traps every hour
+- **Smart Detection**: OpenCV-based pest counting with adaptive thresholds
+- **Multi-Location Support**: Monitor multiple farm zones simultaneously
+- **Risk Assessment**: LOW/MEDIUM/HIGH classification based on pest count
+- **Alert System**: Email, SMS, and MQTT notifications
+- **Historical Tracking**: SQLite database with trend analysis
+- **Web Dashboard**: Real-time monitoring interface
 
-### ✅ Smart Detection
-- Adaptive thresholds for varying lighting
-- Pest size classification
-- Confidence scoring
-- Risk level assessment (LOW/MEDIUM/HIGH)
+### Hardware
+- Raspberry Pi 4 (or 3B+)
+- Pi Camera Module (v2, v3, or HQ)
+- Yellow sticky traps
+- Optional: weatherproof enclosure for outdoor deployment
 
-### ✅ Automated Alerts
-- Email notifications for high pest activity
-- SMS alerts via Twilio (optional)
-- MQTT integration for IoT platforms
-- Daily summary reports
+### Usage
+```bash
+cd "Sticky Trap System"
 
-### ✅ Farmer-Friendly Interface
-- Web dashboard accessible from any device
-- Manual image upload option
-- Statistics and trend charts
-- Export data to CSV
+# Quick demo
+python run_demo.py sticky-trap-sample.jpg
 
-### ✅ Scalable Architecture
-- Support for unlimited cameras
-- Offline-capable with sync
-- Works with Pi Camera or USB webcam
-- Weatherproof deployment ready
+# Run web dashboard
+python dashboard_simple.py
+# Access at: http://localhost:5000
+
+# Start automated monitoring
+python modules/scheduler.py
+```
+
+### Machine Learning Pipeline
+We include a **YOLOv8 training system** for production deployment:
+- Pre-configured training script (`model-training/train_yolov8.py`)
+- Ready-to-use dataset with 284 annotated images
+- Google Colab integration for free GPU training
+- Export models for Raspberry Pi deployment
+- See `model-training/README.md` for details
+
+### Configuration
+Edit `config.json` to set:
+- Camera location and GPS coordinates
+- Capture intervals
+- Detection thresholds
+- Alert settings (email, SMS, MQTT)
 
 ---
 
-## 📊 Use Cases
+## 🌡️ System 2: Heat Stress Detection
 
-1. **Small Farms** - Deploy 2-3 cameras in key zones
-2. **Large Operations** - Monitor 10+ locations across property
-3. **Greenhouses** - Indoor pest monitoring with controlled lighting
-4. **Research** - Collect data on pest populations over time
-5. **Cooperative Farms** - Multi-farm dashboard view
+### Features
+- **Computer Vision Analysis**: Detects heat stress symptoms in plants
+- **Machine Learning Model**: Trained on crop stress indicators
+- **Real-Time Monitoring**: Continuous plant health assessment
+- **Preventive Alerts**: Early warning system before visible damage
+- **Data Logging**: Historical stress patterns
+
+### Technology
+- Scikit-learn Random Forest classifier
+- Image preprocessing with OpenCV
+- Flask web interface
+- Feature extraction for leaf analysis
+
+### Usage
+```bash
+cd Heat-Risk
+python heat_stress_app.py
+# Access at: http://localhost:5001
+```
+
+### How It Works
+1. Camera captures plant images
+2. ML model analyzes visual stress indicators:
+   - Leaf color changes
+   - Wilting patterns
+   - Growth anomalies
+3. Risk score generated (0-100%)
+4. Alerts sent if threshold exceeded
+
+---
+
+## 🔗 System 3: P2P Alert Network
+
+### Features
+- **Decentralized Communication**: Farm-to-farm messaging without central server
+- **Pest Alert Sharing**: Broadcast warnings across farming community
+- **Resilient Network**: Works even if internet connection drops
+- **Privacy-Focused**: Direct peer communication
+- **Message Persistence**: Local database for offline capability
+- **Multi-Farm Dashboard**: Visualize network and alerts
+
+### Architecture
+```
+Farm A (Peer) ←→ Farm B (Peer)
+     ↕               ↕
+Farm C (Peer) ←→ Farm D (Peer)
+```
+
+### Usage
+```bash
+cd P2P-System
+
+# Launch demo with 3 virtual farms
+python demo_launcher.py
+
+# Run single peer node
+python main.py --port 5555 --name "Farm A"
+```
+
+### Features in Detail
+- **Message Routing**: Intelligent path finding between farms
+- **Pest Alert Handler**: Integration with pest detection system
+- **WebSocket Bridge**: Real-time dashboard updates
+- **Message Store**: Persistent storage for reliability
+
+---
+
+## 📊 System 4: Unified Dashboard
+
+### Features
+- **Single Interface**: Monitor all systems in one place
+- **Real-Time Updates**: Live data from all sensors
+- **Historical Data**: Trends and analytics
+- **Multi-Location View**: See status across all farms
+- **Alert Management**: Centralized notification center
+
+### Usage
+```bash
+cd Dashboard
+python app.py
+# Access at: http://localhost:5002
+```
+
+### Dashboard Components
+- Pest detection statistics
+- Heat stress indicators
+- P2P network status
+- Alert history
+- System health monitoring
 
 ---
 
 ## 🛠️ Technology Stack
 
+### Hardware
+- **Raspberry Pi 4** - Edge computing
+- **Pi Camera Module** - Image capture
+- **Yellow Sticky Traps** - Pest monitoring
+- Optional: Environmental sensors (temperature, humidity)
+
+### Software
 - **Computer Vision**: OpenCV, NumPy
-- **Hardware**: Raspberry Pi 4, Pi Camera Module
-- **Backend**: Python, Flask, SQLite
+- **Machine Learning**: YOLOv8 (Ultralytics), Scikit-learn
+- **Backend**: Python, Flask
+- **Database**: SQLite
+- **Networking**: WebSockets, P2P messaging
 - **Alerts**: SMTP (email), Twilio (SMS), MQTT
-- **Frontend**: HTML/CSS/JavaScript
 - **Scheduling**: Python `schedule` library
 
----
-
-## 📱 Demo Instructions
-
-### For Live Demo:
-```bash
-# Option 1: Upload test images via web
-python main.py --dashboard
-
-# Option 2: Analyze existing images
-python main.py --analyze your_sticky_trap.jpg
-
-# Option 3: Batch process folder
-python main.py --batch ./test_images/
-
-# Show statistics
-python main.py --stats --days 7
-```
+### Deployment
+- Tested on Windows, Linux, Raspberry Pi OS
+- Docker support (optional)
+- Cloud-ready architecture
 
 ---
 
-## 🌟 Advanced Features (Production Ready)
+## 💡 Use Cases
 
-- **Auto-start on Pi boot** using systemd
-- **Solar-powered deployment** for remote fields
-- **Weather correlation** (future: link pest data to weather API)
-- **ML model training** on collected data
-- **Multi-farm management** for agricultural cooperatives
-- **API endpoints** for third-party integration
+### Small-Scale Farms (1-5 hectares)
+- Deploy 2-3 sticky trap cameras in key zones
+- Single heat stress monitoring station
+- Connect to neighboring farms via P2P
+
+### Large Operations (10+ hectares)
+- Multiple camera zones across property
+- Distributed heat stress monitoring
+- Central dashboard for farm management
+- Integration with existing farm systems
+
+### Greenhouse Farming
+- Controlled environment monitoring
+- Early pest detection in enclosed spaces
+- Heat stress prevention with climate control
+- Data-driven ventilation decisions
+
+### Agricultural Cooperatives
+- Share pest alerts across member farms
+- Community-wide trend analysis
+- Collaborative pest management
+- Knowledge sharing platform
 
 ---
 
-## 📈 Impact for Farmers
+## 📈 Impact & Benefits
 
-### Before EcoBloom:
-- ❌ Manual trap checking (hours per week)
-- ❌ Delayed pest detection
-- ❌ Guesswork on treatment timing
-- ❌ No historical data
+### Before EcoBloom
+❌ Manual trap checking (hours per week)
+❌ Delayed pest detection
+❌ Reactive heat stress management
+❌ No communication between farms
+❌ Guesswork on treatment timing
 
-### After EcoBloom:
-- ✅ Automated 24/7 monitoring
-- ✅ Instant alerts for pest spikes
-- ✅ Data-driven treatment decisions
-- ✅ Track effectiveness over time
-- ✅ Reduce pesticide use (targeted application)
+### After EcoBloom
+✅ Automated 24/7 monitoring
+✅ Instant pest alerts
+✅ Proactive heat stress prevention
+✅ Farm-to-farm information sharing
+✅ Data-driven decision making
+✅ Reduced pesticide use (targeted application)
+✅ Improved crop yields
+
+### Cost Comparison
+
+| Component | EcoBloom | Commercial Solution |
+|-----------|----------|-------------------|
+| Pest Detection Camera | $50 | $500-2000 |
+| Heat Stress Monitor | $60 | $1000+ |
+| Communication System | $0 (P2P) | $500/year subscription |
+| Dashboard | Free | $100/month |
+| **Total (per location)** | **~$110** | **$3000+** |
 
 ---
 
-## 🎓 Setup Guide
+## 🎓 Setup & Configuration
 
-See **[SETUP.md](SETUP.md)** for detailed installation instructions.
+For detailed installation instructions, see **[SETUP.md](SETUP.md)**
+
+Quick checklist:
+1. ✅ Install Python 3.8+
+2. ✅ Install dependencies: `pip install -r requirements.txt`
+3. ✅ Configure camera (if using Raspberry Pi)
+4. ✅ Edit config files for your location
+5. ✅ Test individual systems
+6. ✅ Start unified dashboard
 
 ---
 
 ## 🏆 Hackathon Highlights
 
-**Innovation**: Combines IoT + Computer Vision for agriculture
-**Scalability**: Works for 1 camera or 100+ cameras
-**Accessibility**: Affordable Raspberry Pi hardware
-**Real-World Impact**: Solves genuine farmer pain point
-**Demo-Ready**: Web dashboard + instant image analysis
+**Why EcoBloom Stands Out:**
+
+1. **Complete Integration**: Not just one tool, but a full farming platform
+2. **Real Hardware**: Designed for actual Raspberry Pi deployment
+3. **P2P Innovation**: Unique farm-to-farm communication network
+4. **Production-Ready ML**: Includes full YOLOv8 training pipeline
+5. **Affordable**: 95% cheaper than commercial alternatives
+6. **Open Source**: Community-driven, extensible
+7. **Qatar-Focused**: Designed for local climate and farming needs
 
 ---
 
-## 🤝 Team
+## 🔮 Future Enhancements
 
-Built for **Reboot Earth Hackathon**
-Focused on sustainable farming through technology
+### Phase 1 (Next 3 Months)
+- [ ] Mobile app for farmers (iOS/Android)
+- [ ] Weather API integration
+- [ ] Automatic irrigation recommendations
+- [ ] Enhanced P2P network with encryption
+
+### Phase 2 (6 Months)
+- [ ] Custom YOLOv8 model trained on Qatar farm data
+- [ ] Pest species classification (not just counting)
+- [ ] Drone integration for large-scale monitoring
+- [ ] Cloud sync for multi-farm management
+
+### Phase 3 (12 Months)
+- [ ] Treatment recommendation engine
+- [ ] Marketplace for pest management insights
+- [ ] Community annotation platform (CVAT integration)
+- [ ] Integration with farm management software
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions from:
+- **Farmers**: Share your pest images for training data
+- **Developers**: Improve detection algorithms
+- **Agricultural Experts**: Enhance pest identification
+- **Students**: Learn IoT and computer vision
+
+See individual system folders for specific contribution guidelines.
 
 ---
 
 ## 📝 License
 
 Open source for educational and agricultural use.
+Commercial use requires attribution.
 
 ---
 
-## 🔮 Future Enhancements
+## 🙏 Acknowledgments
 
-- [ ] Pest species classification (ML model)
-- [ ] Mobile app for farmers
-- [ ] Cloud storage integration (AWS/GCP)
-- [ ] Treatment recommendation engine
-- [ ] Weather API integration
-- [ ] Marketplace for pest data insights
+- **Reboot Earth Hackathon 2025** - For the opportunity
+- **Qatar Agricultural Community** - For inspiration
+- **Open Source Community** - OpenCV, YOLOv8, Flask
+- **Yellow Sticky Trap Dataset** - 284 annotated images for training
 
 ---
 
-**🌱 Making farming smarter, one trap at a time.**
+## 📞 Contact & Support
+
+**For Demo Questions**: Check `DEMO-GUIDE.md`
+**For Setup Help**: Read `SETUP.md`
+**For ML Training**: See `Sticky Trap System/model-training/README.md`
+
+---
+
+## 🎬 Quick Demo Commands
+
+```bash
+# Demo 1: Pest Detection
+cd "Sticky Trap System" && python run_demo.py sticky-trap-sample.jpg
+
+# Demo 2: Heat Stress
+cd ../Heat-Risk && python heat_stress_app.py
+
+# Demo 3: P2P Network
+cd ../P2P-System && python demo_launcher.py
+
+# Demo 4: Unified Dashboard
+cd ../Dashboard && python app.py
+```
+
+---
+
+**🌱 Making farming smarter, safer, and more connected - one farm at a time.**
+
+---
+
+**Built with ❤️ for sustainable agriculture in Qatar**
