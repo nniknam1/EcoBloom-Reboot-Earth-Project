@@ -29,13 +29,40 @@ An affordable, open-source platform with **4 integrated systems**:
 ## 🚀 Quick Start
 
 ### Installation
+
+**Prerequisites:**
+- Python 3.8 or higher
+- pip (Python package manager)
+
+**Install all dependencies:**
 ```bash
 # Clone the repository
 git clone https://github.com/nniknam1/EcoBloom-Reboot-Earth-Project.git
 cd EcoBloom-Reboot-Earth-Project
 
-# Install dependencies
+# Install dependencies for all 4 systems
 pip install -r requirements.txt
+```
+
+**What gets installed:**
+- ✅ **Sticky Trap System**: OpenCV, schedule, Flask
+- ✅ **Heat Stress Detection**: scikit-learn, pandas, matplotlib, seaborn
+- ✅ **P2P Network**: No extra packages (uses Python standard library)
+- ✅ **Dashboard**: Flask-Cors
+
+**Optional (for ML training only):**
+```bash
+# Only needed if you want to train custom YOLOv8 models
+pip install -r "Sticky Trap System/model-training/requirements-training.txt"
+```
+
+**Raspberry Pi Camera Setup (if deploying on hardware):**
+```bash
+# For Pi Camera Module 3 (newer):
+sudo apt install -y python3-picamera2
+
+# For older Pi Camera modules:
+sudo apt install -y python3-picamera
 ```
 
 ### Run Individual Systems
