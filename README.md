@@ -42,6 +42,7 @@ pip install -r requirements.txt
 
 **Pest Detection System:**
 ```bash
+
 cd "Sticky Trap System"
 python run_demo.py sticky-trap-sample.jpg
 # Or run dashboard:
@@ -73,7 +74,7 @@ python app.py
 ```
 EcoBloom-Reboot-Earth-Project/
 │
-├── Sticky Trap System/          # 🐛 Automated Pest Detection
+├── Sticky Trap System/          # Automated Pest Detection
 │   ├── modules/                 # Core detection modules
 │   │   ├── camera_capture.py    # Raspberry Pi camera integration
 │   │   ├── pest_detector.py     # OpenCV pest detection
@@ -91,13 +92,13 @@ EcoBloom-Reboot-Earth-Project/
 │   ├── data/                    # Database and images
 │   └── templates/               # Web UI templates
 │
-├── Heat-Risk/                   # 🌡️ Plant Heat Stress Detection
+├── Heat-Risk/                   # Plant Heat Stress Detection
 │   ├── heat_risk.py             # ML model for heat stress
 │   ├── heat_stress_app.py       # Flask web interface
 │   ├── heat_stress_model.pkl    # Trained model
 │   └── dataset_crops/           # Training data
 │
-├── P2P-System/                  # 🔗 Farm-to-Farm Communication
+├── P2P-System/                  # Farm-to-Farm Communication
 │   ├── peer.py                  # P2P node implementation
 │   ├── message.py               # Message protocol
 │   ├── router.py                # Network routing
@@ -106,7 +107,7 @@ EcoBloom-Reboot-Earth-Project/
 │   ├── dashboard.html           # P2P network dashboard
 │   └── database/                # Message storage
 │
-├── Dashboard/                   # 📊 Unified Monitoring Dashboard
+├── Dashboard/                   # Unified Monitoring Dashboard
 │   ├── app.py                   # Main dashboard server
 │   ├── dashboard.html           # Combined interface
 │   └── service_logs/            # System logs
