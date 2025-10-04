@@ -151,24 +151,78 @@ EcoBloom-Reboot-Earth-Project/
 
 ---
 
-## 🐛 System 1: Sticky Trap Pest Detection
+## 🐛 System 1: Pest Detection & Monitoring
+
+### What It Does
+EcoBloom's pest detection system uses solar-powered cameras with built-in sensors to automatically monitor sticky traps across your farm. The system provides real-time pest level tracking with instant alerts when HIGH severity pests are detected.
 
 ### Features
-- **Automated Image Capture**: Raspberry Pi cameras photograph sticky traps every hour
-- **Smart Detection**: OpenCV-based pest counting with adaptive thresholds
-- **Multi-Location Support**: Monitor multiple farm zones simultaneously
-- **Risk Assessment**: LOW/MEDIUM/HIGH classification based on pest count
-- **Alert System**: Email, SMS, and MQTT notifications
-- **Historical Tracking**: SQLite database with trend analysis
-- **Web Dashboard**: Real-time monitoring interface
+- **Automated Image Capture**: ESP32-CAM modules photograph sticky traps at scheduled intervals
+- **Custom AI Detection**: Trained classification model for accurate pest counting
+- **Smart Risk Assessment**: LOW/MEDIUM/HIGH severity classification
+- **Personalized Placement**: 3-minute Smart Farm Setup survey provides customized camera placement recommendations
+- **Interactive Farm Map**: Visual guide showing exactly where to install cameras based on your crops and farm type
+- **QR Code Setup**: Each camera has a QR code that instantly connects to your account and shows personalized placement video
+- **Historical Tracking**: SQLite database with trend analysis across all monitoring points
+- **Web Dashboard**: Real-time monitoring interface with auto-recommendations
 
-### Hardware
-- Raspberry Pi 4 (or 3B+)
-- Pi Camera Module (v2, v3, or HQ)
-- Yellow sticky traps
-- Optional: weatherproof enclosure for outdoor deployment
+### Hardware Package
+**Basic Package Includes:**
+- Solar-charged camera with built-in CO₂ sensor
+- 10 yellow sticky traps for pest monitoring
+- QR code for instant device registration
+- Personalized video demo for setup
+- Weatherproof enclosure for outdoor deployment
 
-### Usage
+**Technical Specs:**
+- Raspberry Pi Zero 2 W (hub)
+- ESP32-CAM modules (image capture)
+- 10W solar panel + battery
+- 32GB microSD card storage
+- Ra-02 LoRa module (for optional P2P network)
+
+### Getting Started
+**Step 1: Complete Smart Farm Setup (3 minutes)**
+Answer simple visual questions on our website:
+- What crops are you growing? (tomatoes, cucumbers, peppers, herbs, etc.)
+- Farm type? (open field, greenhouse, shade house)
+- Farm size? (small <500m², medium 500-2000m², large >2000m²)
+- Biggest challenge? (pests, heat stress, irrigation, not sure)
+- Enable GPS location for personalized setup
+
+**Step 2: Get Instant Recommendations**
+System analyzes your situation and provides:
+- Personalized camera quantity and placement
+- Pest & heat risk assessment for your location and crops
+- Interactive farm map showing installation points
+- Instant cost estimate for your package
+
+**Step 3: Setup Your Cameras**
+When package arrives:
+1. Scan QR code on each camera to connect to your account
+2. Watch personalized video showing where to place that specific camera
+3. Mount camera at recommended location
+4. System automatically starts monitoring
+
+### AI & Machine Learning
+**Current Detection:**
+- Custom classification model for pest identification
+- Yellow Sticky Traps Dataset (284 labeled images)
+- OpenCV-based counting with adaptive thresholds
+
+**Future Enhancement Pipeline:**
+- YOLOv8 training system for improved accuracy
+- CVAT (Computer Vision Annotation Tool) integration
+- Google Colab for free GPU training
+- Continuous model improvement with farmer feedback
+
+### Subscription & Pricing
+- **First Month**: Free trial with full access
+- **Monthly Subscription**: $10/month after trial
+- **Includes**: Dashboard access, auto-recommendations, optional sticky trap refills
+- **Add-ons**: Additional cameras, extra sticky traps
+
+### Usage (Technical Demo)
 ```bash
 cd "Sticky Trap System"
 
@@ -183,71 +237,103 @@ python dashboard_simple.py
 python modules/scheduler.py
 ```
 
-### Machine Learning Pipeline
-We include a **YOLOv8 training system** for production deployment:
-- Pre-configured training script (`model-training/train_yolov8.py`)
-- Ready-to-use dataset with 284 annotated images
-- Google Colab integration for free GPU training
-- Export models for Raspberry Pi deployment
-- See `model-training/README.md` for details
-
-### Configuration
-Edit `config.json` to set:
-- Camera location and GPS coordinates
-- Capture intervals
-- Detection thresholds
-- Alert settings (email, SMS, MQTT)
-
 ---
 
-## 🌡️ System 2: Heat Stress Detection
+## 🌡️ System 2: Heat Risk Monitoring
+
+### What It Does
+Real-time heat stress detection system that monitors temperature, humidity, and soil conditions to prevent crop damage before visible symptoms appear.
 
 ### Features
-- **Computer Vision Analysis**: Detects heat stress symptoms in plants
-- **Machine Learning Model**: Trained on crop stress indicators
-- **Real-Time Monitoring**: Continuous plant health assessment
-- **Preventive Alerts**: Early warning system before visible damage
-- **Data Logging**: Historical stress patterns
+- **Multi-Sensor Monitoring**: DHT22 sensor tracks temperature and humidity
+- **Soil Moisture Tracking**: Capacitive sensor monitors irrigation needs
+- **Random Forest AI Model**: Trained on CSV dataset for accurate heat risk prediction
+- **Early Warning Alerts**: Notifications before plants show heat damage
+- **Preventive Recommendations**: Automated suggestions for irrigation and cooling
+- **Historical Data**: Track patterns and optimize farm management
 
-### Technology
-- Scikit-learn Random Forest classifier
-- Image preprocessing with OpenCV
-- Flask web interface
-- Feature extraction for leaf analysis
+### How It Works
+1. Sensors collect environmental data (temperature, humidity, soil moisture, sunlight)
+2. Random Forest model analyzes conditions against crop-specific thresholds
+3. Risk score calculated: LOW/MEDIUM/HIGH
+4. Dashboard displays current status and trends
+5. Alerts sent when intervention needed
 
-### Usage
+### Integration
+- Works with pest detection cameras (shared hardware platform)
+- Data syncs to unified dashboard
+- Combines pest + heat insights for comprehensive farm health
+
+### Usage (Technical Demo)
 ```bash
 cd Heat-Risk
 python heat_stress_app.py
 # Access at: http://localhost:5001
 ```
 
-### How It Works
-1. Camera captures plant images
-2. ML model analyzes visual stress indicators:
-   - Leaf color changes
-   - Wilting patterns
-   - Growth anomalies
-3. Risk score generated (0-100%)
-4. Alerts sent if threshold exceeded
-
 ---
 
-## 🔗 System 3: P2P Alert Network
+## 🔗 System 3: Local Farmer Network (P2P)
+
+### What It Is
+An **optional** feature that adds LoRa mesh networking for direct farm-to-farm communication within 5-10km range, working alongside WiFi/5G connectivity.
+
+### Why Use P2P?
+**All farmers use WiFi/5G** for core EcoBloom features (camera uploads, dashboard access, Community Q&A). The Local Farmer Network adds an extra layer for:
+
+**1. Instant Pest Alerts (Critical Feature)**
+- When one farm detects HIGH severity pests, P2P broadcasts to neighbors within seconds
+- No cloud routing delays - direct device-to-device alerts
+- Critical because pests migrate between adjacent fields
+- Neighbors get early warning before infestation spreads
+
+**2. Resilient Connectivity**
+- Backup during sandstorms/power outages when WiFi/5G drops
+- LoRa operates independently - zero additional data costs
+- Mesh network stays active even if internet weakens
+
+**3. Privacy-First Communication**
+- Device-to-device messaging (not stored on servers)
+- Hyperlocal collaboration (equipment sharing, bulk orders)
+- Real-time coordination with nearby farms
+
+### How It Works
+```
+Farm A (WiFi/5G + LoRa) ←→ Farm B (WiFi/5G + LoRa)
+         ↕                           ↕
+Farm C (WiFi/5G + LoRa) ←→ Farm D (WiFi/5G + LoRa)
+
+LoRa Range: 5-10km | WiFi/5G: Always active for cloud features
+```
+
+**Technology:**
+- Ra-02 LoRa module (included in hardware package)
+- Distributed P2P networking protocol
+- Message persistence for offline reliability
+- Smart routing between neighbors
+
+### Enable or Disable Anytime
+- **WiFi/5G Only**: Full EcoBloom functionality (dashboard, alerts, AI chatbot)
+- **+ P2P Network**: Faster local alerts, backup connectivity, neighbor messaging
+- Toggle in app settings - your choice
 
 ### Features
-- **Decentralized Communication**: Farm-to-farm messaging without central server
-- **Pest Alert Sharing**: Broadcast warnings across farming community
-- **Resilient Network**: Works even if internet connection drops
-- **Privacy-Focused**: Direct peer communication
-- **Message Persistence**: Local database for offline capability
-- **Multi-Farm Dashboard**: Visualize network and alerts
+- **Decentralized Alerts**: Instant pest warnings to 5-10km radius
+- **Networkless Q&A**: Farmers help each other with 2-24 hour response times
+- **Privacy-Focused**: Direct peer communication, no server storage
+- **Zero Data Cost**: LoRa operates independently of cellular/WiFi
+- **Backup Connectivity**: Works during internet outages
+- **Multi-Farm Dashboard**: Visualize network and community alerts
 
-### Architecture
-```
-Farm A (Peer) ←→ Farm B (Peer)
-     ↕               ↕
-Farm C (Peer) ←→ Farm D (Peer)
+### Usage (Technical Demo)
+```bash
+cd P2P-System
+
+# Launch demo with 3 virtual farms
+python demo_launcher.py
+
+# Run single peer node
+python main.py --port 5555 --name "Farm A"
 ```
 
 ### Usage
