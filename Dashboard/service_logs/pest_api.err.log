@@ -1,0 +1,49 @@
+ * Debugger is active!
+ * Debugger PIN: 975-736-439
+Traceback (most recent call last):
+  File "D:\Ahmad\Programming\Reboot the eart\Pest-detection\app.py", line 127, in <module>
+    app.run(debug=True, use_reloader=False, host='0.0.0.0', port=5000)
+  File "C:\Users\naveed\AppData\Local\Programs\Python\Python310\lib\site-packages\flask\app.py", line 662, in run
+    run_simple(t.cast(str, host), port, self, **options)
+  File "C:\Users\naveed\AppData\Local\Programs\Python\Python310\lib\site-packages\werkzeug\serving.py", line 1093, in run_simple
+    srv = make_server(
+  File "C:\Users\naveed\AppData\Local\Programs\Python\Python310\lib\site-packages\werkzeug\serving.py", line 930, in make_server
+    return ThreadedWSGIServer(
+  File "C:\Users\naveed\AppData\Local\Programs\Python\Python310\lib\site-packages\werkzeug\serving.py", line 792, in __init__
+    self.socket = socket.fromfd(fd, address_family, socket.SOCK_STREAM)
+  File "C:\Users\naveed\AppData\Local\Programs\Python\Python310\lib\socket.py", line 545, in fromfd
+    nfd = dup(fd)
+OSError: [WinError 10038] An operation was attempted on something that is not a socket
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.10:5000
+Press CTRL+C to quit
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.10:5000
+Press CTRL+C to quit
+127.0.0.1 - - [04/Oct/2025 07:55:19] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [04/Oct/2025 07:56:08] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [04/Oct/2025 07:56:35] "OPTIONS /detect HTTP/1.1" 200 -
+127.0.0.1 - - [04/Oct/2025 07:56:36] "POST /detect HTTP/1.1" 200 -
+127.0.0.1 - - [04/Oct/2025 07:56:58] "OPTIONS /detect HTTP/1.1" 200 -
+127.0.0.1 - - [04/Oct/2025 07:56:59] "POST /detect HTTP/1.1" 200 -
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.10:5000
+Press CTRL+C to quit
+127.0.0.1 - - [04/Oct/2025 07:58:08] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [04/Oct/2025 07:58:12] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [04/Oct/2025 07:58:16] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [04/Oct/2025 07:58:26] "OPTIONS /detect HTTP/1.1" 200 -
+127.0.0.1 - - [04/Oct/2025 07:58:26] "POST /detect HTTP/1.1" 200 -
+127.0.0.1 - - [04/Oct/2025 07:58:33] "OPTIONS /detect HTTP/1.1" 200 -
+127.0.0.1 - - [04/Oct/2025 07:58:34] "POST /detect HTTP/1.1" 200 -
+127.0.0.1 - - [04/Oct/2025 07:58:42] "OPTIONS /detect HTTP/1.1" 200 -
+127.0.0.1 - - [04/Oct/2025 07:58:42] "POST /detect HTTP/1.1" 200 -
+127.0.0.1 - - [04/Oct/2025 08:06:17] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [04/Oct/2025 08:06:30] "OPTIONS /detect HTTP/1.1" 200 -
+127.0.0.1 - - [04/Oct/2025 08:06:31] "POST /detect HTTP/1.1" 200 -

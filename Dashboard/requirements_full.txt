@@ -1,0 +1,7 @@
+Flask==2.3.2
+Flask-Cors==3.0.10
+numpy
+pandas
+Pillow
+joblib
+opencv-python-headless

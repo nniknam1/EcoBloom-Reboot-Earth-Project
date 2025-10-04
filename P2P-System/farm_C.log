@@ -1,0 +1,28 @@
+
+==================================================
+Starting Farm C
+Host: localhost:5003
+==================================================
+
+Listening socket created for member Farm_C
+[Farm C] Connecting to localhost:5001...
+Connecting to localhost:5001...
+[Farm C] [OK] Connected to localhost:5001
+[Farm C] Connecting to localhost:5002...
+Connecting to localhost:5002...
+[Farm C] [OK] Connected to localhost:5002
+Handshake from Farm_B
+[Farm_C]> Peer Farm_C discovered 1 new peers
+[Farm_C]> Network updated
+[Farm_C]> Handshake from Farm_A
+[Farm_C]> Network updated
+[Farm_C]> 
+[Farm C] Peer running. Monitoring network...
+[Farm C] Press Ctrl+C to stop
+
+[Farm C] Status: 2 connections, 2 known peers
+[Farm C] Status: 2 connections, 2 known peers
+
+[Farm C] Shutting down...
+Closing down peer...
+Peer closing complete
